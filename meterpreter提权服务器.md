@@ -18,13 +18,21 @@
       mimikatz_command -f sekurlsa::searchPasswords
     
     `无引号服务路径漏洞`
-    C:/windows/ysx soft/x.exe
-    C:/windows/ysx/x.exe
+    从注册表中查看注册的服务，你会看到“ImagePath”的值是
+    C:\Windows\system service\service.exe
+    注册表中安全应为
+    "C:\Windows\system service\service.exe"
+    不安全的路径为
+    C:\Windows\system service\service.exe
+    当Windows尝试启动这个服务时，它会按照下面的顺序寻找可执行文件，并运行第一个找到的：
+    C:/windows/ysx soft/x.exe 原注册表路径
+    C:/windows/ysx.exe  CreateProcess函数读取结果
     
     查找命令
+    运行下面的命令后，所有没有加双引号的服务将会被列出来
     wmic service get name,displayname,pathname,startmode |findstr /i "auto"|findstr /i /v "c:\windows\\" |findstr /i /v """
     
-    icacls x.exe  是否为EveryOne权限
+    icacls x.exe  是否为EveryOne权限 “F”代表完全控制。“CI”代表从属容器将继承访问控制项。“OI”代表从属文件将继承访问控制项。
     
     如果是 则可以msf生成木马与存在漏洞的应用程序名称一致放在ysx目录下以管理员或系统权限启动这个应用
     
